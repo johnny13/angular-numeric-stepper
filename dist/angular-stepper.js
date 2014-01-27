@@ -1,22 +1,23 @@
-/*! angular-stepper - v0.0.1 - 2013-12-06
-* Copyright (c) Julien Bouquillon [revolunet] 2013; Licensed  */
+/*! angular-stepper - v0.0.1 - 2014-01-27
+* Copyright (c) Julien Bouquillon [revolunet] 2014; Licensed  */
 angular.module('revolunet.stepper', [])
 
-.directive('rnStepper', function() {
+.directive('numericStepper', function() {
     return {
         restrict: 'AE',
         require: 'ngModel',
         scope: {
             min: '=',
-            max: '='
+            max: '=',
+            stepBy: '='
         },
-        template: '<button ng-disabled="isOverMin()" ng-click="decrement()">-</button>' +
-                  '<div></div>' +
-                  '<button ng-disabled="isOverMax()" ng-click="increment()">+</button>',
+        template:   '<span></span>' +
+                    '<div><button ng-disabled="isOverMax()" ng-click="increment()">+</button>' +
+                    '<button ng-disabled="isOverMin()" ng-click="decrement()">-</button></div>',
         link: function(scope, iElement, iAttrs, ngModelController) {
 
             ngModelController.$render = function() {
-                iElement.find('div').text(ngModelController.$viewValue);
+                iElement.find('span').text(ngModelController.$viewValue);
                 // update the validation status
                 checkValidity();
             };
@@ -48,21 +49,39 @@ angular.module('revolunet.stepper', [])
             }
 
             scope.isOverMin = function(strict) {
-                var offset = strict?0:1;
+                var offset = strict ? 0 : scope.stepBy;
                 return (angular.isDefined(scope.min) && (ngModelController.$viewValue - offset) < parseInt(scope.min, 10));
             };
+
+            /**
+             * @name isOverMax
+             * @param strict
+             * @description When the user clicks the increment button, increments the value by the step coefficient
+             */
             scope.isOverMax = function(strict) {
-                var offset = strict?0:1;
+                var offset = strict ? 0 : scope.stepBy;
                 return (angular.isDefined(scope.max) && (ngModelController.$viewValue + offset) > parseInt(scope.max, 10));
             };
 
 
-            // update the value when user clicks the buttons
+            /**
+             * @name increment
+             * @description When the user clicks the increment button, increments the value by the step coefficient
+             */
             scope.increment = function() {
-                updateModel(+1);
+                if(angular.isDefined(scope.stepBy) && !isNaN(Number(scope.stepBy))){
+                    updateModel(+Number(scope.stepBy));
+                }
             };
+
+            /**
+             * @name decrement
+             * @description UWhen the user clicks the increment button, decrements the value by the step coefficient
+             */
             scope.decrement = function() {
-                updateModel(-1);
+                if(angular.isDefined(scope.stepBy) && !isNaN(Number(scope.stepBy))){
+                    updateModel(-Number(scope.stepBy));
+                }
             };
 
             // check validity on start, in case we're directly out of bounds
@@ -98,8 +117,8 @@ describe('rnStepper directive', function() {
         // compile the tpl with the $rootScope created above
         // wrap our directive inside a form to be able to test
         // that our form integration works well (via ngModelController)
-        if (!tpl) tpl = '<div rn-stepper ng-model="testModel"></div></form>';
-        tpl = '<form name="form">' + tpl + '</tpl>';
+        if (!tpl) tpl = '<div rn-stepper ng-model="testModel"></div>';
+        tpl = '<form name="form">' + tpl + '</form>';
         // inject allows you to use AngularJS dependency injection
         // to retrieve and use other services
         inject(function($compile) {

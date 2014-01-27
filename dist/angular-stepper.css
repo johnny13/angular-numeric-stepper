@@ -1,41 +1,53 @@
-div[rn-stepper] {
+div[numeric-stepper] {
   border: 1px solid #bbb;
-  display: inline-block;
-  height: 42px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  display: inline-block;
+  height: 42px;
+  width: 82px;
 }
 
-div[rn-stepper].ng-invalid-out-of-bounds div {
+div[numeric-stepper].ng-invalid-out-of-bounds span {
   color: red;
 }
 
-div[rn-stepper] button {
-  appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
-  border: 0;
-  width: 40px;
+div[numeric-stepper] div {
+  float: left;
   height: 40px;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  background: #4d4dff;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  outline: none;
+  width: 40px;
 }
 
-div[rn-stepper] button[disabled] {
+div[numeric-stepper] div button {
+  border-radius: 2px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #428bca;
+  border: 1px solid #357ebd;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: white;
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  height: 20px;
+  line-height: 10px;
+  margin: 0;
+  padding-bottom: 4px;
+  outline: none;
+  width: 40px;
+}
+
+div[numeric-stepper] div button[disabled] {
   opacity: 0.3;
 }
 
-div[rn-stepper] button:active {
+div[numeric-stepper] div button:active {
   box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.25);
-  background: #3333ff;
+  background: #357ebd;
 }
 
-div[rn-stepper] div {
+div[numeric-stepper] span {
+  float: left;
   vertical-align: top;
   width: 40px;
   background: #eeeeee;
