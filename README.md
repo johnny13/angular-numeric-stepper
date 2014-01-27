@@ -8,8 +8,8 @@ Has "step-by" attribute and a different layout
 
 To use the directive at this moment, there are two ways. (Pretty boring ways if you ask me)
 
-a) One is to clone this repo and then manually copy to your project
-b) Other is to follow the instructions on https://github.com/revolunet/angular-stepper
+1. One is to clone this repo and then manually copy to your project
+2. Other is to follow the instructions on https://github.com/revolunet/angular-stepper
     and then implement the changes here
 
 after installing add a dependency
